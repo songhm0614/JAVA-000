@@ -16,24 +16,11 @@ public class HelloClassLoader extends ClassLoader {
 
     public static void main(String[] args) {
         try {
-
-            // 获取要加载的类对象
             Class<?> clz = new HelloClassLoader().findClass("Hello");
-
-            // 获取要调用的方法
             Method hello = clz.getDeclaredMethod("hello");
             hello.setAccessible(true);
-
-            // 调用指定实例的方法
             hello.invoke(clz.newInstance());
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
@@ -50,7 +37,7 @@ public class HelloClassLoader extends ClassLoader {
             e.printStackTrace();
         }
         for (int i = 0; i < length; i++) {
-            bytes[i] = (byte) (255 - bytes[i]);//将字节码文件的值转换过来
+            bytes[i] = (byte) (255 - bytes[i]);
         }
         return defineClass(name, bytes, 0, length);
     }
